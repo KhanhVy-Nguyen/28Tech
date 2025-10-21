@@ -1,0 +1,9 @@
+This 28tech submission is no longer reachable.
+
+The judge's heatmap records a submission on 2025-10-21, but it is absent from the account's
+submission list: it was made to a problem that has since been
+unpublished or hidden, so neither the submission nor its source can
+be retrieved through the web interface.
+
+The commit exists so the contribution graph still matches the
+original heatmap.
