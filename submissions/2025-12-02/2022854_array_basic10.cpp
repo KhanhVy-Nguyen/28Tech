@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+using ll=long long;
+const int mod=1e9+7;
+
+bool Prime(int n){
+	if(n<2) return false;
+	else{
+		for(int i=2; i<=sqrt(n); i++){
+			if(n%i==0){
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+int main(){
+	int n; cin>>n;
+	int a[n];
+	for(int i=0; i<n; i++){
+		cin>>a[i];
+	}
+	
+	ll left=0;
+	ll right=0;
+	for(int i=0; i<n; i++){
+		left=0;
+		right=0;
+		for(int j=0; j<i; j++){
+			left=left+a[j];
+		}
+		for(int j=i+1; j<n; j++){
+			right=right+a[j];
+		}
+		if(Prime(left) && Prime(right)){
+			cout<<i<<" ";
+		}
+	}
+	return 0;
+	
+	
+}
