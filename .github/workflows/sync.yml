@@ -1,0 +1,36 @@
+name: Sync 28tech heatmap
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours (UTC)
+  workflow_dispatch:         # "Run workflow" button on the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-28tech
+  cancel-in-progress: false
+
+env:
+  DMOJ_USER: Khanh_Vy_NN_2007
+  GIT_NAME: KhanhVy-Nguyen
+  GIT_EMAIL: 110233400+KhanhVy-Nguyen@users.noreply.github.com
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0     # full history: per-day commit counts need it
+
+      - name: Append commits for new 28tech submissions
+        env:
+          DMOJ_SESSIONID: ${{ secrets.DMOJ_SESSIONID }}
+          DMOJ_USERNAME: ${{ secrets.DMOJ_USERNAME }}
+          DMOJ_PASSWORD: ${{ secrets.DMOJ_PASSWORD }}
+        run: python3 .sync/sync.py --user "$DMOJ_USER" --name "$GIT_NAME" --email "$GIT_EMAIL"
+
+      - name: Push
+        run: git push origin HEAD:main
